@@ -12,9 +12,9 @@ futures_data = {
 
 # Function to calculate target profit, stop loss, and tick sizes
 def calculate_ticks_and_points(opening_profit, risk_amount, tick_index, contract_size):
-    # Calculate tick value in dollars (tick index * contract size)
+
     tick_value = tick_index * contract_size
-    tick_per_point = 4  # 4 ticks = 1 point
+    tick_per_point = 4
 
     # Calculate the 30% of the opening profit for target profit
     target_profit = opening_profit * 0.30
@@ -27,27 +27,27 @@ def calculate_ticks_and_points(opening_profit, risk_amount, tick_index, contract
     
     # Calculate the number of stop loss ticks based on the amount of risk the user wants
     stop_loss_ticks = risk_amount / tick_value
-    stop_loss_points = stop_loss_ticks / tick_per_point  # 4 ticks = 1 point
+    stop_loss_points = stop_loss_ticks / tick_per_point # 4 ticks = 1 point
     
-    return target_profit, target_ticks, target_points, stop_loss_ticks, stop_loss_points, tick_value
+    return target_profit, target_ticks, target_points, stop_loss_ticks, stop_loss_points
 
-# Streamlit app layout with updated background color and card styling
+# Streamlit app layout
 st.markdown(
     """
     <style>
     .main {
-        background-color: #e6f7ff;  /* Light blue background for the whole app */
+        background-color: #F5F5F5;  /* Light grey background */
         color: #333333;  /* Dark text for contrast */
         padding: 2rem;
         border-radius: 8px;
     }
     .title {
         text-align: center;
-        color: #1a73e8;  /* Blue title color */
+        color: #4CAF50;  /* Green title color */
     }
     .subtitle {
         text-align: center;
-        color: #003366;  /* Deep blue color for subtitles */
+        color: #FF5733;  /* Orange color for subtitles */
     }
     .container {
         text-align: center;
@@ -62,11 +62,20 @@ st.markdown(
         margin-top: 20px;
     }
     .card {
-        background-color: #ffffff;  /* White background for cards */
+        background-color: #FFFFFF;
         padding: 1.5rem;
         margin: 10px 0;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .target-card {
+        background-color: #e0f7fa;  /* Light cyan */
+    }
+    .stop-loss-card {
+        background-color: #ffccbc;  /* Light coral */
+    }
+    .profit-card {
+        background-color: #d1c4e9;  /* Light purple */
     }
     </style>
     """, unsafe_allow_html=True
@@ -125,26 +134,27 @@ if calculate_button:
     # Ensure both inputs are valid (opening_profit > 0 and risk_amount >= 0)
     if opening_profit > 0 and risk_amount >= 0:
         # Get the tick value and contract size of the selected instrument
-        tick_index = instrument_data['tick_index']
+        tick_value = instrument_data['tick_index'] * instrument_data['contract_size']
         contract_size = instrument_data['contract_size']
         
         # Calculate the result based on the tick value of the selected instrument
-        target_profit, target_ticks, target_points, stop_loss_ticks, stop_loss_points, tick_value = calculate_ticks_and_points(
-            opening_profit, risk_amount, tick_index, contract_size)
+        target_profit, target_ticks, target_points, stop_loss_ticks, stop_loss_points = calculate_ticks_and_points(
+            opening_profit, risk_amount, tick_value, contract_size)
         
-        # Display the results in a card
-        st.markdown('<div class="card"><h3 class="subtitle">30% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
+        # Display the results in colored cards
+
+        st.markdown('<div class="card target-card"><h3 class="subtitle">30% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
         st.write(f"Target Profit: ${target_profit:.2f}")
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # Display the number of ticks and points needed to reach the target profit in a card
-        st.markdown('<div class="card"><h3 class="subtitle">To achieve the target profit:</h3>', unsafe_allow_html=True)
+        # Display the number of ticks and points needed to reach the target profit in a colored card
+        st.markdown('<div class="card profit-card"><h3 class="subtitle">To achieve the target profit:</h3>', unsafe_allow_html=True)
         st.write(f"Ticks: {target_ticks:.2f} ticks")
         st.write(f"Points: {target_points:.2f} points")
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # Display the number of stop loss ticks and points in a card
-        st.markdown('<div class="card"><h3 class="subtitle">Risk management - Stop loss:</h3>', unsafe_allow_html=True)
+        # Display the number of stop loss ticks and points in a colored card
+        st.markdown('<div class="card stop-loss-card"><h3 class="subtitle">Risk management - Stop loss:</h3>', unsafe_allow_html=True)
         st.write(f"Stop Loss Ticks: {stop_loss_ticks:.2f} ticks")
         st.write(f"Stop Loss Points: {stop_loss_points:.2f} points")
         st.markdown('</div>', unsafe_allow_html=True)
