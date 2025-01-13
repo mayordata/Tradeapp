@@ -82,7 +82,7 @@ st.markdown(
 )
 
 # Add image (e.g., a dollar image or currency related)
-st.markdown('<div class="image-container"><img src="https://i.imgur.com/3np29VJ.png" alt="Dollar Image" width="200"></div>', unsafe_allow_html=True)
+#st.markdown('<div class="image-container"><img src="https://i.imgur.com/3np29VJ.png" alt="Dollar Image" width="200"></div>', unsafe_allow_html=True)
 
 # Streamlit app title
 st.markdown('<h1 class="title">Target and Loss Stop Calculator</h1>', unsafe_allow_html=True)
