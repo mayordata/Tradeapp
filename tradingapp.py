@@ -47,7 +47,7 @@ st.markdown(
     }
     .subtitle {
         text-align: center;
-        color: #FF5733;  /* Orange color for subtitles */
+        color: black;  /* Set subtitle text to black */
     }
     .container {
         text-align: center;
