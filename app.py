@@ -62,11 +62,20 @@ st.markdown(
         margin-top: 20px;
     }
     .card {
-        background-color: #FFEB3B;  /* Yellow card background color */
         padding: 1.5rem;
         margin: 10px 0;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        color: black;
+    }
+    .card-target {
+        background-color: #FFEB3B;  /* Yellow card background for Target Profit */
+    }
+    .card-ticks {
+        background-color: #4CAF50;  /* Green card background for Ticks */
+    }
+    .card-stop-loss {
+        background-color: #2196F3;  /* Blue card background for Stop Loss */
     }
     </style>
     """, unsafe_allow_html=True
@@ -134,19 +143,19 @@ if selected_instrument != "--Select an Instrument--":
             target_profit, target_ticks, target_points, stop_loss_ticks, stop_loss_points, tick_value = calculate_ticks_and_points(
                 opening_profit, risk_amount, tick_index, contract_size)
             
-            # Display the results in a card with a colored background
-            st.markdown('<div class="card"><h3 class="subtitle">30% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
+            # Display the results in a card with different background colors
+            st.markdown('<div class="card card-target"><h3 class="subtitle">30% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
             st.write(f"Target Profit: ${target_profit:.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # Display the number of ticks and points needed to reach the target profit in a card
-            st.markdown('<div class="card"><h3 class="subtitle">To achieve the target profit:</h3>', unsafe_allow_html=True)
+            # Display the number of ticks and points needed to reach the target profit in a green card
+            st.markdown('<div class="card card-ticks"><h3 class="subtitle">To achieve the target profit:</h3>', unsafe_allow_html=True)
             st.write(f"Ticks: {target_ticks:.2f} ticks")
             st.write(f"Points: {target_points:.2f} points")
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # Display the number of stop loss ticks and points in a card
-            st.markdown('<div class="card"><h3 class="subtitle">Risk management - Stop loss:</h3>', unsafe_allow_html=True)
+            # Display the number of stop loss ticks and points in a blue card
+            st.markdown('<div class="card card-stop-loss"><h3 class="subtitle">Risk management - Stop loss:</h3>', unsafe_allow_html=True)
             st.write(f"Stop Loss Ticks: {stop_loss_ticks:.2f} ticks")
             st.write(f"Stop Loss Points: {stop_loss_points:.2f} points")
             st.markdown('</div>', unsafe_allow_html=True)
