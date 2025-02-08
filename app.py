@@ -17,7 +17,7 @@ def calculate_ticks_and_points(opening_profit, risk_amount, tick_index, contract
     tick_per_point = 4  # 4 ticks = 1 point
 
     # Calculate the 30% of the opening profit for target profit
-    target_profit = opening_profit * 0.30
+    target_profit = opening_profit * 0.49
 
     # Calculate the number of ticks needed to achieve the target profit
     target_ticks = target_profit / tick_value
@@ -93,7 +93,7 @@ st.markdown("""
 
 This tool helps you calculate the target profit, stop loss, and the number of ticks and points required based on your selected futures instrument.
 
-1. **Target Profit**: 30% of your opening profit.
+1. **Target Profit**: 49% of your opening profit.
 2. **Stop Loss**: Calculated based on your desired risk.
 3. **Tick Value**: Based on the selected futures instrument.
 
@@ -144,7 +144,7 @@ if selected_instrument != "--Select an Instrument--":
                 opening_profit, risk_amount, tick_index, contract_size)
             
             # Display the results in a card with different background colors
-            st.markdown('<div class="card card-target"><h3 class="subtitle">30% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
+            st.markdown('<div class="card card-target"><h3 class="subtitle">49% of your opening profit (${:.2f}):</h3>'.format(opening_profit), unsafe_allow_html=True)
             st.write(f"Target Profit: ${target_profit:.2f}")
             st.markdown('</div>', unsafe_allow_html=True)
 
